@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <!-- Form -->
+        <record model="ir.ui.view" id="activityinfo_form_primherit_view">
+            <field name="name">activityinfo.form</field>
+            <field name="model">epc.activityinfo</field>
+            <field name="mode">primary</field>
+            <field eval="16" name="priority"/>
+            <field name="inherit_id" ref="epc.activity_form_view"/>
+            <field name="arch" type="xml">
+                <form position="attributes">
+                    <attribute name="string">Activity Info</attribute>
+                </form>
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="complete_name"/>
+                    <field name="entity_id"/>
+                    <field name="entity_attrib_id"/>
+                </xpath>
+                <xpath expr="//field[@name='responsible_id']" position="after">
+                    <field name="validity"/>
+                    <field name="sigle"/>
+                    <field name="cnum"/>
+                    <field name="subdivision"/>
+                    <field name="activity_type"/>
+                </xpath>
+                <xpath expr="//page[@name='specset']" position="after">
+                    <page string="Students">
+                        <group col="1">
+                            <field name="student_ids" nolabel="1"/>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="activityinfo_form_view">
+            <field name="name">activityinfostandalone.form</field>
+            <field name="model">epc.activityinfo</field>
+            <field eval="8" name="priority"/>
+            <field name="inherit_id" eval="False"/>
+            <field name="arch" type="xml">
+                <form string="Activity Form">
+                    <sheet>
+                        <group>
+                            <field name="complete_name"/>
+                        </group>
+                        <group col="4">
+                            <field name="code"/>
+                            <field name="site"/>
+                            <field name="entity_id"/>
+                            <field name="entity_attrib_id"/>
+                        </group>
+                        <notebook>
+                            <page string="Details">
+                                <group col="4">
+                                    <field name="validity"/>
+                                    <field name="sigle"/>
+                                    <field name="cnum"/>
+                                    <field name="subdivision"/>
+                                    <field name="activity_type"/>
+                                </group>
+                            </page>
+                            <page string="Volumes">
+                                <group col="4">
+                                    <field name="vol1_total"/>
+                                    <field name="vol2_total"/>
+                                    <field name="vol1_q1"/>
+                                    <field name="vol2_q1"/>
+                                    <field name="vol1_q2"/>
+                                    <field name="vol2_q2"/>
+                                    <field name="vol1_coeff"/>
+                                    <field name="vol2_coeff"/>
+                                </group>
+                            </page>
+                            <page string="Students">
+                                <group col="1">
+                                    <field name="student_ids" nolabel="1"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Tree -->
+        <record model="ir.ui.view" id="epc_view_activityinfo_tree">
+            <field name="name">epc.view.activityinfo_tree</field>
+            <field name="model">epc.activityinfo</field>
+            <field name="priority" eval="16"/>
+            <field name="arch" type="xml">
+                <tree string="activityinfo">
+                    <field name="name"/>
+                    <field name="complete_name"/>
+                    <field name="activity_id"/>
+                    <field name="validity"/>
+                    <field name="sigle"/>
+                    <field name="cnum"/>
+                    <field name="subdivision"/>
+                    <field name="activity_type"/>
+                </tree>
+            </field>
+        </record>
+        
+    </data>
+</openerp>

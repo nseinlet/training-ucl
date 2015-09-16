@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <!-- Search -->
+        <record model="ir.ui.view" id="activity_search_view">
+            <field name="name">activity.search</field>
+            <field name="model">epc.activity</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="description"/>
+                    <field name="ens_start"/>
+                    <field name="ens_end"/>
+                    <field name="specset_ids" filter_domain="['|', '|', ('specset_ids.language','ilike',self), ('specset_ids.skills','ilike',self), ('specset_ids.prerequisite','ilike',self)]"/>
+                    <group string="Group By">
+                        <filter name="group_by_start" string="Start" context="{'group_by': 'ens_start'}"/>
+                        <filter name="group_by_end" string="End" context="{'group_by': 'ens_end'}"/>
+                    </group>
+                    <filter name="2015 activities" domain="['|', ('ens_start', '=', 2015), ('ens_end', '=', 2015)]"
+        				string="2015 activities"/>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Form -->
+        <record model="ir.ui.view" id="activity_form_view">
+            <field name="name">activity.form</field>
+            <field name="model">epc.activity</field>
+            <field eval="16" name="priority"/>
+            <field name="arch" type="xml">
+                <form string="Activity Form">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="active"/>
+                        </group>
+                        <notebook>
+                            <page string="Schedule">
+                                <group col="4">
+                                    <field name="ens_start"/>
+                                    <field name="ens_end"/>
+                                    <field name="responsible_id"/>
+                                </group>
+                            </page>
+                            <page string="Description">
+                                <field name="description"/>
+                            </page>
+                            <page string="Specset" name="specset">
+                                <field name="specset_ids">
+                                    <tree editable="bottom">
+                                        <field name="validity"/>
+                                        <field name="language"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="activity_form_view_inherit">
+            <field name="name">activity.form.infos</field>
+            <field name="model">epc.activity</field>
+            <field eval="8" name="priority"/>
+            <field name="mode">primary</field>
+            <field name="inherit_id" ref="epc.activity_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='specset']" position="after">
+                    <page string="Infos">
+                        <field name="activityinfo_ids"/>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+        
+    </data>
+</openerp>

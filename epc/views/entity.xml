@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!-- Form -->
+        <record model="ir.ui.view" id="epc_entity_form">
+            <field name="name">epc.view.entityform</field>
+            <field name="model">epc.entity</field>
+            <field name="priority" eval="16"/>
+            <field name="arch" type="xml">
+                <form string="UCL Entity form">
+                    <sheet>
+                        <group colspan="4">
+                            <field name="name"/>
+                            <field name="parent_id" attrs="{'required': [('name', '!=', 'UCL')], 'invisible': [('name', '=', 'UCL')]}"/>
+                        </group>
+                        <group col="4">
+                            <field name="validity_start"/>
+                            <field name="validity_end"/>
+                        </group>
+                        <notebook>
+                            <page string="Activities">
+                                <field name="activites_charge_ids"/>
+                            </page>
+                            <page string="Attributed activities">
+                                <field name="activites_attrib_ids"/>
+                            </page>
+                            
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        
+        <!-- List -->
+        <record model="ir.ui.view" id="epc_view_entity_tree">
+            <field name="name">epc.view.entity_tree</field>
+            <field name="model">epc.entity</field>
+            <field name="priority" eval="16"/>
+            <field name="arch" type="xml">
+                <tree string="Entities list">
+                    <field name="name"/>
+                    <field name="validity_start"/>
+                    <field name="validity_end"/>
+                </tree>
+            </field>
+        </record>
+        
+    </data>
+</openerp>

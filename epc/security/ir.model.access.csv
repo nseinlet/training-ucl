@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_epc_activity,access_epc_activity,model_epc_activity,,1,0,0,0
+access_epc_specset,access_epc_specset,model_epc_specset,,1,0,0,0
+access_epc_activityinfo,access_epc_activityinfo,model_epc_activityinfo,,1,0,0,0

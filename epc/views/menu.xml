@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <!-- window action -->
+        <record model="ir.actions.act_window" id="activity_list_action">
+            <field name="name">Activities</field>
+            <field name="res_model">epc.activity</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Create the first course
+                </p>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="activityinfo_list_action">
+            <field name="name">Activity infos</field>
+            <field name="res_model">epc.activityinfo</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" eval="False"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Create the first info
+                </p>
+            </field>    
+        </record>
+        <record model="ir.actions.act_window.view" id="activityinfo_list_action_tree">
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="epc_view_activityinfo_tree"/>
+            <field name="act_window_id" ref="activityinfo_list_action"/>
+            <field name="sequence">8</field>
+        </record>
+        <record model="ir.actions.act_window.view" id="activityinfo_list_action_form">
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="activityinfo_form_primherit_view"/>
+            <field name="act_window_id" ref="activityinfo_list_action"/>
+            <field name="sequence">8</field>
+        </record>
+        
+      <record model="ir.actions.act_window" id="contact_list_action">
+          <field name="name">Contacts</field>
+          <field name="res_model">res.partner</field>
+          <field name="view_mode">tree,form</field>
+      </record>
+      <record model="ir.actions.act_window" id="entity_list_action">
+          <field name="name">Entities</field>
+          <field name="res_model">epc.entity</field>
+          <field name="view_mode">tree,form</field>
+      </record>
+
+        <menuitem id="main_epc_menu" name="EPC"/>
+        <menuitem id="epc_menu" name="Activities"
+                  parent="main_epc_menu"/>
+        <menuitem id="activitys_menu" name="Activities" parent="epc_menu"
+                  action="activity_list_action" sequence="1"/>
+        <menuitem id="activityinfos_menu" name="Infos" parent="epc_menu"
+                  action="activityinfo_list_action" sequence="2"/>
+                  
+      <menuitem id="configuration_menu" name="Configuration"
+                parent="main_epc_menu"/>
+      <menuitem id="contact_menu" name="Contacts"
+                parent="configuration_menu"
+                action="contact_list_action"/>
+      <menuitem id="entity_menu" name="Entities"
+                parent="configuration_menu"
+                action="entity_list_action"/>
+    </data>
+</openerp>
