@@ -425,7 +425,58 @@ Traditional (_name == _inherit)
 
 Using model inheritance, modify the existing Partner model to add an instructor boolean field, and a many2many field that corresponds to the session-partner relation
 
+```
+# -*- coding: utf-8 -*-
+from openerp import fields, models
+
+class Partner(models.Model):
+    _inherit = 'res.partner'
+
+    # Add a new column to the res.partner model, by default partners are not
+    # instructors
+    instructor = fields.Boolean("Instructor", default=False)
+    student = fields.Boolean("Student", default=False)
+```
+
 Using view inheritance, display this fields in the partner form view
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+ <openerp>
+    <data>
+        <!-- Add instructor field to existing view -->
+        <record model="ir.ui.view" id="partner_instructor_form_view">
+            <field name="name">partner.instructor</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <notebook position="inside">
+                    <page string="Sessions">
+                        <group>
+                            <field name="instructor"/>
+                            <field name="student"/>
+                        </group>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+
+    </data>
+</openerp>
+```
+
+```
+<record model="ir.actions.act_window" id="contact_list_action">
+    <field name="name">Contacts</field>
+    <field name="res_model">res.partner</field>
+    <field name="view_mode">tree,form</field>
+</record>
+<menuitem id="configuration_menu" name="Configuration"
+          parent="main_epc_menu"/>
+<menuitem id="contact_menu" name="Contacts"
+          parent="configuration_menu"
+          action="contact_list_action"/>
+```
 
 Traditional (_name != _inherit)
 -------------------------------
@@ -698,10 +749,27 @@ class ActivityInfo(models.Model):
 </openerp>
 ```
 
+Domain in menus
+===============
+
+- Only display students and instructors in the contact menu
+
+```
+<record model="ir.actions.act_window" id="contact_list_action">
+    <field name="name">Contacts</field>
+    <field name="res_model">res.partner</field>
+    <field name="view_mode">tree,form</field>
+    <field name="domain">['|', ('instructor', '=', True), ('student', '=', True)]</field>
+    <field name="context" eval="{ 'default_instructor': 1, 
+                                   'default_student': 1 }" />
+</record>
+```
+
 Many2many
 =========
 
 - add a many2many student_ids from activityinfo to res.partner 
+- ensure to be able to list activityinfos from student
 
 ```
 from openerp import models, fields, api
@@ -718,6 +786,7 @@ class ActivityInfo(models.Model):
     cnum = fields.Integer('CNum', required=True)
     subdivision = fields.Char('Subdivision')
     activity_type = fields.Selection([('COURS', 'Cours'), ('PARTIM', 'Partim'), ('THESE', 'Thèse'), ('CLASSE', 'Classe')])
+    student_ids = fields.Many2many('res.partner', domain="[('student', '=', 1)]", relation='epc_student_activityinfo', column1='activity_id', column2='student_id')
 ```
 
 ```
@@ -1074,3 +1143,8 @@ class ActivityInfo(models.Model):
                 raise ValidationError("Your total is not equal to the sum of the 2 quarters : %s + %s != %s" % (record.vol2_q1, record.vol2_q2,  record.vol2_total))
 
 ```
+NEEDACTION
+==========
+- _inherit = ['ir.needaction_mixin']
+- def _needaction_domain_get(self, cr, uid, context=None):
+- you have the list of the courses where results needs to be signed, encoded, ...
