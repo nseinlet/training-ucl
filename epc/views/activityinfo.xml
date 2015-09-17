@@ -9,9 +9,14 @@
             <field eval="16" name="priority"/>
             <field name="inherit_id" ref="epc.activity_form_view"/>
             <field name="arch" type="xml">
-                <form position="attributes">
+                <form position="inside">
                     <attribute name="string">Activity Info</attribute>
                 </form>
+                <xpath expr="//sheet" position="before">
+                    <header>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                </xpath>
                 <xpath expr="//field[@name='name']" position="after">
                     <field name="complete_name"/>
                     <field name="entity_id"/>
@@ -28,6 +33,12 @@
                     <page string="Students">
                         <group col="1">
                             <field name="student_ids" nolabel="1"/>
+                        </group>
+                    </page>
+                    <page string="thesis" attrs="{'invisible': [('activity_type', '!=', 'THESE')]}">
+                        <group col="4">
+                            <field name="date_start"/>
+                            <field name="date_end"/>
                         </group>
                     </page>
                 </xpath>
@@ -78,6 +89,12 @@
                                     <field name="student_ids" nolabel="1"/>
                                 </group>
                             </page>
+                            <page string="thesis" attrs="{'invisible': [('activity_type', '!=', 'THESE')]}">
+                                <group col="4">
+                                    <field name="date_start"/>
+                                    <field name="date_end"/>
+                                </group>
+                            </page>
                         </notebook>
                     </sheet>
                 </form>
@@ -90,7 +107,7 @@
             <field name="model">epc.activityinfo</field>
             <field name="priority" eval="16"/>
             <field name="arch" type="xml">
-                <tree string="activityinfo">
+                <tree string="activityinfo" colors="blue:activity_type=='COURS';red:activity_type=='THESE'">
                     <field name="name"/>
                     <field name="complete_name"/>
                     <field name="activity_id"/>
@@ -100,6 +117,92 @@
                     <field name="subdivision"/>
                     <field name="activity_type"/>
                 </tree>
+            </field>
+        </record>
+        
+        <!-- calendar view -->
+        <record model="ir.ui.view" id="epc_view_activityinfo_calendar">
+            <field name="name">epc.activityinfo.calendar</field>
+            <field name="model">epc.activityinfo</field>
+            <field name="arch" type="xml">
+                <calendar string="Activity infos Calendar" date_start="date_start"
+                          date_stop="date_end"
+                          color="site">
+                    <field name="name"/>
+                </calendar>
+            </field>
+        </record>
+        
+        <!-- gantt view -->
+        <record model="ir.ui.view" id="epc_view_activityinfo_gantt">
+            <field name="name">epc.activityinfo.gantt</field>
+            <field name="model">epc.activityinfo</field>
+            <field name="arch" type="xml">
+                <gantt string="Activities Gantt" color="subdivision"
+                       date_start="date_start" date_end="date_end"
+                       default_group_by='site'>
+                    <field name="complete_name"/>
+                </gantt>
+            </field>
+        </record>
+        
+        <!-- graph view -->
+        <record model="ir.ui.view" id="epc_view_activityinfo_graph">
+            <field name="name">epc.activityinfo.graph</field>
+            <field name="model">epc.activityinfo</field>
+            <field name="arch" type="xml">
+                <graph string="Participations by Courses">
+                    <field name="activity_id"/>
+                    <field name="students_count" type="measure"/>
+                </graph>
+
+            </field>
+        </record>
+        
+        <!-- Kanban -->
+        <record model="ir.ui.view" id="epc_view_activityinfo_kanban">
+            <field name="name">epc.activityinfo.kanban</field>
+            <field name="model">epc.activityinfo</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by="activity_id">
+                    <field name="color"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div
+                                    t-attf-class="oe_kanban_color_{{kanban_getcolor(record.color.raw_value)}}
+                                                  oe_kanban_global_click_edit oe_semantic_html_override
+                                                  oe_kanban_card {{record.group_fancy==1 ? 'oe_kanban_card_fancy' : ''}}">
+                                <div class="oe_dropdown_kanban">
+                                    <!-- dropdown menu -->
+                                    <div class="oe_dropdown_toggle">
+                                        <span class="oe_e">#</span>
+                                        <ul class="oe_dropdown_menu">
+                                            <li>
+                                                <a type="delete">Delete</a>
+                                            </li>
+                                            <li>
+                                                <ul class="oe_kanban_colorpicker"
+                                                    data-field="color"/>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="oe_clear"></div>
+                                </div>
+                                <div t-attf-class="oe_kanban_content">
+                                    <!-- title -->
+                                    Session name:
+                                    <field name="complete_name"/>
+                                    <br/>
+                                    Start date:
+                                    <field name="date_start"/>
+                                    <br/>
+                                    End date:
+                                    <field name="date_end"/>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
             </field>
         </record>
         

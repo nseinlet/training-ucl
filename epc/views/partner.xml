@@ -9,8 +9,13 @@
             <field name="arch" type="xml">
                 <notebook position="inside">
                     <page string="Sessions">
-                        <group>
+                        <group col="4">
                             <field name="instructor"/>
+                            <field name="student"/>
+                        </group>
+                        <separator string="Activities" attrs="{'invisible': [('student', '=', False)]}"/>
+                        <group col="1">
+                            <field name="activityinfo_ids" nolabel="1"  attrs="{'invisible': [('student', '=', False)]}"/>
                         </group>
                     </page>
                 </notebook>

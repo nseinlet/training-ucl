@@ -15,3 +15,17 @@ class SpecSet(models.Model):
     prerequisite = fields.Html(string="Prerequisite")
 
     _sql_constraints = [('activlang_uniq', 'unique(activity_id,language)', 'Specification set must be unique by language-activity!')]
+
+    @api.multi
+    def copy(self, default=None):
+        default = dict(default or {})
+
+        copied_count = self.search_count(
+            [('language', '=like', u"{}%".format(self.language))])
+        if not copied_count:
+            new_language = u"{} (1)".format(self.language)
+        else:
+            new_language = u"{} ({})".format(self.language, copied_count)
+
+        default['language'] = new_language
+        return super(SpecSet, self).copy(default)

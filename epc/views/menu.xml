@@ -16,7 +16,7 @@
             <field name="name">Activity infos</field>
             <field name="res_model">epc.activityinfo</field>
             <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">tree,form,calendar,gantt,graph,kanban</field>
             <field name="view_id" eval="False"/>
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">Create the first info
@@ -35,11 +35,24 @@
             <field name="act_window_id" ref="activityinfo_list_action"/>
             <field name="sequence">8</field>
         </record>
+        <record model="ir.actions.act_window" id="specset_list_action">
+            <field name="name">Specification sets</field>
+            <field name="res_model">epc.specset</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" eval="False"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Create the first specification set
+                </p>
+            </field>    
+        </record>
         
       <record model="ir.actions.act_window" id="contact_list_action">
           <field name="name">Contacts</field>
           <field name="res_model">res.partner</field>
           <field name="view_mode">tree,form</field>
+          <field name="domain">['|', ('instructor', '=', True), ('student', '=', True)]</field>
+          <field name="context" eval="{ 'default_instructor': 1,'default_student': 1 }" />
       </record>
       <record model="ir.actions.act_window" id="entity_list_action">
           <field name="name">Entities</field>
@@ -63,5 +76,8 @@
       <menuitem id="entity_menu" name="Entities"
                 parent="configuration_menu"
                 action="entity_list_action"/>
+      <menuitem id="entity_menu" name="Spec sets"
+                parent="configuration_menu"
+                action="specset_list_action"/>
     </data>
 </openerp>

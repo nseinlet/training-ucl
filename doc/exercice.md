@@ -1143,6 +1143,215 @@ class ActivityInfo(models.Model):
                 raise ValidationError("Your total is not equal to the sum of the 2 quarters : %s + %s != %s" % (record.vol2_q1, record.vol2_q2,  record.vol2_total))
 
 ```
+
+Duplicate
+---------
+Since we added a constraint on the specset, it's not possible to use the duplicate anymore. Re-implement your own "copy" method which allows to duplicate the SpecSet object, changing the original lang into "[original name] (#)".
+
+```
+@api.multi
+def copy(self, default=None):
+    default = dict(default or {})
+
+    copied_count = self.search_count(
+        [('language', '=like', u"{}%".format(self.language))])
+    if not copied_count:
+        new_language = u"{} (1)".format(self.language)
+    else:
+        new_language = u"{} ({})".format(self.language, copied_count)
+
+    default['language'] = new_language
+    return super(SpecSet, self).copy(default)
+```
+
+attrs
+=====
+
+It's possible to set fields as invisible, required, readonly, ... conditionnaly using attrs on fields.
+
+- set fields activityinfo_ids invisible when partner is not a student:
+
+```
+<separator string="Activities" attrs="{'invisible': [('student', '=', False)]}"/>
+<group col="1">
+    <field name="activityinfo_ids" nolabel="1"  attrs="{'invisible': [('student', '=', False)]}"/>
+</group>
+```
+
+Add a new tad in activityinfo only visible when it's a thesis, with a date_start and date_end, and allow 600 days to the student for his thesis
+
+```
+@api.onchange('date_start', 'date_end')
+def _verify_dates(self):
+    if self.date_start and not self.date_end:
+        self.date_end = fields.Datetime.to_string(fields.Datetime.from_string(self.date_start) + datetime.timedelta(days=600))
+    if self.date_start and self.date_end and self.date_end < self.date_start:
+        return {
+            'warning': {
+                'title': "Incorrect dates",
+                'message': "Finish date must be greater or equal to begin date",
+            },
+        }
+```
+
+Views
+=====
+
+Tree
+----
+
+- set color on infos, red for THESE and blue for COURS
+
+```
+<record model="ir.ui.view" id="epc_view_activityinfo_tree">
+    <field name="name">epc.view.activityinfo_tree</field>
+    <field name="model">epc.activityinfo</field>
+    <field name="priority" eval="16"/>
+    <field name="arch" type="xml">
+        <tree string="activityinfo" colors="blue:activity_type=='COURS';red:activity_type=='THESE'">
+            <field name="name"/>
+            <field name="complete_name"/>
+            <field name="activity_id"/>
+            <field name="validity"/>
+            <field name="sigle"/>
+            <field name="cnum"/>
+            <field name="subdivision"/>
+            <field name="activity_type"/>
+        </tree>
+    </field>
+</record>
+```
+
+Calendar
+--------
+
+- create a calendar view for infos based on thesis dates
+```
+<record model="ir.ui.view" id="epc_view_activityinfo_calendar">
+    <field name="name">epc.activityinfo.calendar</field>
+    <field name="model">epc.activityinfo</field>
+    <field name="arch" type="xml">
+        <calendar string="Activity infos Calendar" date_start="date_start"
+                  date_stop="date_end"
+                  color="site">
+            <field name="name"/>
+        </calendar>
+    </field>
+</record>
+```
+
+Gantt
+-----
+
+```
+<record model="ir.ui.view" id="epc_view_activityinfo_gantt">
+    <field name="name">epc.activityinfo.gantt</field>
+    <field name="model">epc.activityinfo</field>
+    <field name="arch" type="xml">
+        <gantt string="Activities Gantt" color="subdivision"
+               date_start="date_start" date_end="date_end"
+               default_group_by='site'>
+            <field name="complete_name"/>
+        </gantt>
+    </field>
+</record>
+```
+
+Graph
+-----
+
+- Add the number of attendees as a stored computed field
+- Then add the relevant view
+
+```
+students_count = fields.Integer(
+    string="students count", compute='_get_students_count', store=True)
+    
+@api.depends('student_ids')
+def _get_students_count(self):
+    for r in self:
+        r.students_count = len(r.student_ids)
+```
+
+```
+<record model="ir.ui.view" id="epc_view_activityinfo_graph">
+    <field name="name">epc.activityinfo.graph</field>
+    <field name="model">epc.activityinfo</field>
+    <field name="arch" type="xml">
+        <graph string="Participations by Courses">
+            <field name="activity_id"/>
+            <field name="students_count" type="measure"/>
+        </graph>
+
+    </field>
+</record>
+```
+
+Kanban
+------
+
+- Add an integer color field to the Activityinfo model
+- Add the kanban view and update the action
+
+```
+<record model="ir.ui.view" id="epc_view_activityinfo_kanban">
+    <field name="name">epc.activityinfo.kanban</field>
+    <field name="model">epc.activityinfo</field>
+    <field name="arch" type="xml">
+        <kanban default_group_by="activity_id">
+            <field name="color"/>
+            <templates>
+                <t t-name="kanban-box">
+                    <div
+                            t-attf-class="oe_kanban_color_{{kanban_getcolor(record.color.raw_value)}}
+                                          oe_kanban_global_click_edit oe_semantic_html_override
+                                          oe_kanban_card {{record.group_fancy==1 ? 'oe_kanban_card_fancy' : ''}}">
+                        <div class="oe_dropdown_kanban">
+                            <!-- dropdown menu -->
+                            <div class="oe_dropdown_toggle">
+                                <span class="oe_e">#</span>
+                                <ul class="oe_dropdown_menu">
+                                    <li>
+                                        <a type="delete">Delete</a>
+                                    </li>
+                                    <li>
+                                        <ul class="oe_kanban_colorpicker"
+                                            data-field="color"/>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="oe_clear"></div>
+                        </div>
+                        <div t-attf-class="oe_kanban_content">
+                            <!-- title -->
+                            Session name:
+                            <field name="complete_name"/>
+                            <br/>
+                            Start date:
+                            <field name="date_start"/>
+                            <br/>
+                            End date:
+                            <field name="date_end"/>
+                        </div>
+                    </div>
+                </t>
+            </templates>
+        </kanban>
+    </field>
+</record>
+```
+
+Workflows
+=========
+
+Define a state, of type selection, to define:
+- ('draft', "Draft")
+- ('in_progress', "In progress")
+- ('give_result', "Give results")
+- ('to_be_signed', "Results to be signed")
+- ('done', "Done")
+
+
 NEEDACTION
 ==========
 - _inherit = ['ir.needaction_mixin']
