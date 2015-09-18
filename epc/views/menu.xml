@@ -16,7 +16,7 @@
             <field name="name">Activity infos</field>
             <field name="res_model">epc.activityinfo</field>
             <field name="view_type">form</field>
-            <field name="view_mode">tree,form,calendar,gantt,graph,kanban</field>
+            <field name="view_mode">tree,form,calendar,gantt,graph</field>
             <field name="view_id" eval="False"/>
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">Create the first info
@@ -76,7 +76,7 @@
       <menuitem id="entity_menu" name="Entities"
                 parent="configuration_menu"
                 action="entity_list_action"/>
-      <menuitem id="entity_menu" name="Spec sets"
+      <menuitem id="specset_menu" name="Spec sets"
                 parent="configuration_menu"
                 action="specset_list_action"/>
     </data>

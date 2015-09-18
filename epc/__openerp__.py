@@ -30,7 +30,9 @@
         'views/partner.xml',
         'views/entity.xml',
         'views/menu.xml',
+        'views/activityinfo_workflow.xml',
         'security/ir.model.access.csv',
+        'wizards/resultswizard.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

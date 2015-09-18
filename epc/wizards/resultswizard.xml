@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="resultswizard_form_view">
+            <field name="name">epc.wizard.result.form</field>
+            <field name="model">epc.wizard.result</field>
+            <field name="arch" type="xml">
+                <form string="New results">
+                    <group col="1">
+                        <field name="activityinfo_id" readonly="1" nolabel="1"/>
+                        <field name="line_ids" nolabel="1">
+                            <tree editable="bottom">
+                                <field name="student_id" readonly="1"/>
+                                <field name="result"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <footer>
+                        <button name="validate_results" type="object"
+                                string="Validate" class="oe_highlight"/>
+                        or
+                        <button special="cancel" string="Cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        
+        
+        
+    </data>
+</openerp>

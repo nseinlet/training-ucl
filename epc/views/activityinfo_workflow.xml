@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record model="workflow" id="wkf_activityinfo">
+            <field name="name">EPC Activity info workflow</field>
+            <field name="osv">epc.activityinfo</field>
+            <field name="on_create">True</field>
+        </record>
+
+        <record model="workflow.activity" id="draft">
+            <field name="name">Draft</field>
+            <field name="wkf_id" ref="wkf_activityinfo"/>
+            <field name="flow_start" eval="True"/>
+            <field name="kind">function</field>
+            <field name="action">action_draft()</field>
+        </record>
+        <record model="workflow.activity" id="in_progress">
+            <field name="name">In progress</field>
+            <field name="wkf_id" ref="wkf_activityinfo"/>
+            <field name="kind">function</field>
+            <field name="action">action_in_progress()</field>
+        </record>
+        <record model="workflow.activity" id="give_result">
+            <field name="name">Give results</field>
+            <field name="wkf_id" ref="wkf_activityinfo"/>
+            <field name="kind">function</field>
+            <field name="action">action_give_result()</field>
+        </record>
+        <record model="workflow.activity" id="to_be_signed">
+            <field name="name">To be signed</field>
+            <field name="wkf_id" ref="wkf_activityinfo"/>
+            <field name="kind">function</field>
+            <field name="action">action_to_be_signed()</field>
+        </record>
+        <record model="workflow.activity" id="done">
+            <field name="name">Done</field>
+            <field name="wkf_id" ref="wkf_activityinfo"/>
+            <field name="kind">function</field>
+            <field name="action">action_done()</field>
+        </record>
+        
+        <record model="workflow.transition" id="activityinfo_draft_to_in_progress">
+            <field name="act_from" ref="draft"/>
+            <field name="act_to" ref="in_progress"/>
+            <field name="signal">in_progress</field>
+        </record>
+        <record model="workflow.transition" id="activityinfo_in_progress_to_give_result">
+            <field name="act_from" ref="in_progress"/>
+            <field name="act_to" ref="give_result"/>
+            <field name="signal">give_result</field>
+        </record>
+        <record model="workflow.transition" id="activityinfo_in_progress_to_draft">
+            <field name="act_from" ref="in_progress"/>
+            <field name="act_to" ref="draft"/>
+            <field name="signal">draft</field>
+        </record>
+        <record model="workflow.transition" id="activityinfo_give_result_to_draft">
+            <field name="act_from" ref="give_result"/>
+            <field name="act_to" ref="draft"/>
+            <field name="signal">draft</field>
+        </record>
+        <record model="workflow.transition" id="activityinfo_give_result_to_to_be_signed">
+            <field name="act_from" ref="give_result"/>
+            <field name="act_to" ref="to_be_signed"/>
+            <field name="signal">to_be_signed</field>
+        </record>
+        <record model="workflow.transition" id="activityinfo_to_be_signed_to_give_result">
+            <field name="act_from" ref="to_be_signed"/>
+            <field name="act_to" ref="give_result"/>
+            <field name="signal">give_result</field>
+        </record>
+        <record model="workflow.transition" id="activityinfo_to_be_signed_to_done">
+            <field name="act_from" ref="to_be_signed"/>
+            <field name="act_to" ref="done"/>
+            <field name="signal">done</field>
+        </record>
+        
+    </data>
+</openerp>

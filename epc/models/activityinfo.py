@@ -4,7 +4,7 @@ import datetime
 
 class ActivityInfo(models.Model):
     _name = 'epc.activityinfo'
-    _inherit = 'mail.thread'
+    _inherit = ['mail.thread', 'ir.needaction_mixin']
     _inherits = [['epc.activity','activity_id'],]
     _description = "Activity Info"
     
@@ -39,8 +39,9 @@ class ActivityInfo(models.Model):
         ('give_result', "Give results"),
         ('to_be_signed', "Results to be signed"),
         ('done', "Done"),
-    ], default='draft')
-
+    ], default='draft', track_visibility=True)
+    result_ids = fields.One2many('epc.activityinfo.result', 'activityinfo_id', string="Results")
+    
     @api.multi
     def action_draft(self):
         self.state = 'draft'
@@ -104,3 +105,30 @@ class ActivityInfo(models.Model):
     def _get_students_count(self):
         for r in self:
             r.students_count = len(r.student_ids)
+            
+    @api.multi
+    def wizard_encode_results(self):
+        wiz_id = self.env['epc.wizard.result'].create({
+            'activityinfo_id': self.id,
+            'line_ids':[(0,0,{'student_id': student.id}) for student in self.student_ids],
+        })
+        return {
+            'type': 'ir.actions.act_window',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'epc.wizard.result',
+            'res_id': wiz_id.id,
+            'target': 'new',
+        }
+        
+    @api.model
+    def _needaction_domain_get(self):
+        return [('state', '=', 'give_result')]
+        
+class ActivityInfoResults(models.Model):
+    _name = 'epc.activityinfo.result'
+    
+    activityinfo_id = fields.Many2one('epc.activityinfo', string='Activity info')
+    student_id = fields.Many2one('res.partner', string='Student', required=True)
+    result = fields.Float('Result')
+    

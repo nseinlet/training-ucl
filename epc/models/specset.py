@@ -19,13 +19,13 @@ class SpecSet(models.Model):
     @api.multi
     def copy(self, default=None):
         default = dict(default or {})
-
+        
         copied_count = self.search_count(
-            [('language', '=like', u"{}%".format(self.language))])
+            [('language', '=like', u"{}%".format(self.language)), ('activity_id', "=", self.activity_id.id)])
         if not copied_count:
             new_language = u"{} (1)".format(self.language)
         else:
-            new_language = u"{} ({})".format(self.language, copied_count)
+            new_language = u"{} ({})".format(self.language, copied_count+1)
 
         default['language'] = new_language
         return super(SpecSet, self).copy(default)

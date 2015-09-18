@@ -1194,6 +1194,12 @@ def _verify_dates(self):
         }
 ```
 
+- using options, disallow creation/open of form of entity from activityinfo
+
+```
+<field name="entity_id" options="{'no_create': True, 'no_open': True}"/>
+```
+
 Views
 =====
 
@@ -1351,9 +1357,258 @@ Define a state, of type selection, to define:
 - ('to_be_signed', "Results to be signed")
 - ('done', "Done")
 
+```
+state = fields.Selection([
+    ('draft', "Draft"),
+    ('in_progress', "In progress"),
+    ('give_result', "Give results"),
+    ('to_be_signed', "Results to be signed"),
+    ('done', "Done"),
+], default='draft')
+```
 
+```
+<record model="ir.ui.view" id="activityinfo_form_primherit_view">
+    <field name="name">activityinfo.form</field>
+    <field name="model">epc.activityinfo</field>
+    <field name="mode">primary</field>
+    <field eval="16" name="priority"/>
+    <field name="inherit_id" ref="epc.activity_form_view"/>
+    <field name="arch" type="xml">
+        <form position="inside">
+            <attribute name="string">Activity Info</attribute>
+        </form>
+        <xpath expr="//sheet" position="before">
+            <header>
+                <button name="action_draft" type="object"
+                        string="Reset to draft"
+                        states="in_progress,give_result"/>
+                <button name="action_in_progress" type="object"
+                        string="Confirm" states="draft"
+                        class="oe_highlight"/>
+                <button name="action_give_result" type="object"
+                        string="Need results" states="in_progress"
+                        class="oe_highlight"/>
+                <button name="action_to_be_signed" type="object"
+                        string="To be signed" states="give_result"
+                        class="oe_highlight"/>
+                <button name="action_done" type="object"
+                        string="Mark as done" states="to_be_signed"
+                        class="oe_highlight"/>
+                <field name="state" widget="statusbar"/>
+            </header>
+        </xpath>
+```
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record model="workflow" id="wkf_activityinfo">
+            <field name="name">EPC Activity info workflow</field>
+            <field name="osv">epc.activityinfo</field>
+            <field name="on_create">True</field>
+        </record>
+
+        <record model="workflow.activity" id="draft">
+            <field name="name">Draft</field>
+            <field name="wkf_id" ref="wkf_activityinfo"/>
+            <field name="flow_start" eval="True"/>
+            <field name="kind">function</field>
+            <field name="action">action_draft()</field>
+        </record>
+        <record model="workflow.activity" id="in_progress">
+            <field name="name">In progress</field>
+            <field name="wkf_id" ref="wkf_activityinfo"/>
+            <field name="kind">function</field>
+            <field name="action">action_in_progress()</field>
+        </record>
+        <record model="workflow.activity" id="give_result">
+            <field name="name">Give results</field>
+            <field name="wkf_id" ref="wkf_activityinfo"/>
+            <field name="kind">function</field>
+            <field name="action">action_give_result()</field>
+        </record>
+        <record model="workflow.activity" id="to_be_signed">
+            <field name="name">To be signed</field>
+            <field name="wkf_id" ref="wkf_activityinfo"/>
+            <field name="kind">function</field>
+            <field name="action">action_to_be_signed()</field>
+        </record>
+        <record model="workflow.activity" id="done">
+            <field name="name">Done</field>
+            <field name="wkf_id" ref="wkf_activityinfo"/>
+            <field name="kind">function</field>
+            <field name="action">action_done()</field>
+        </record>
+        
+        <record model="workflow.transition" id="activityinfo_draft_to_in_progress">
+            <field name="act_from" ref="draft"/>
+            <field name="act_to" ref="in_progress"/>
+            <field name="signal">in_progress</field>
+        </record>
+        <record model="workflow.transition" id="activityinfo_in_progress_to_give_result">
+            <field name="act_from" ref="in_progress"/>
+            <field name="act_to" ref="give_result"/>
+            <field name="signal">give_result</field>
+        </record>
+        <record model="workflow.transition" id="activityinfo_in_progress_to_draft">
+            <field name="act_from" ref="in_progress"/>
+            <field name="act_to" ref="draft"/>
+            <field name="signal">draft</field>
+        </record>
+        <record model="workflow.transition" id="activityinfo_give_result_to_draft">
+            <field name="act_from" ref="give_result"/>
+            <field name="act_to" ref="draft"/>
+            <field name="signal">draft</field>
+        </record>
+        <record model="workflow.transition" id="activityinfo_give_result_to_to_be_signed">
+            <field name="act_from" ref="give_result"/>
+            <field name="act_to" ref="to_be_signed"/>
+            <field name="signal">to_be_signed</field>
+        </record>
+        <record model="workflow.transition" id="activityinfo_to_be_signed_to_give_result">
+            <field name="act_from" ref="to_be_signed"/>
+            <field name="act_to" ref="give_result"/>
+            <field name="signal">give_result</field>
+        </record>
+        <record model="workflow.transition" id="activityinfo_to_be_signed_to_done">
+            <field name="act_from" ref="to_be_signed"/>
+            <field name="act_to" ref="done"/>
+            <field name="signal">done</field>
+        </record>
+        
+    </data>
+</openerp>
+```
+
+Wizards
+=======
+
+- create a new wizard to add points to students
+- save points in the activityinfo with a new model activityinforesults
+```
+    result_ids = fields.One2many('epc.activityinfo.result', 'activityinfo_id', string="Results")
+    
+    @api.depends('student_ids')
+    def _get_students_count(self):
+        for r in self:
+            r.students_count = len(r.student_ids)
+            
+    @api.multi
+    def wizard_encode_results(self):
+        wiz_id = self.env['epc.wizard.result'].create({
+            'activityinfo_id': self.id,
+            'line_ids':[(0,0,{'student_id': student.id}) for student in self.student_ids],
+        })
+        return {
+            'type': 'ir.actions.act_window',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'epc.wizard.result',
+            'res_id': wiz_id.id,
+            'target': 'new',
+        }
+        
+class ActivityInfoResults(models.Model):
+    _name = 'epc.activityinfo.result'
+    
+    activityinfo_id = fields.Many2one('epc.activityinfo', string='Activity info')
+    student_id = fields.Many2one('res.partner', string='Student', required=True)
+    result = fields.Float('Result')
+```
+
+```
+# -*- coding: utf-8 -*-
+from openerp import models, fields, api
+
+class ResultsWizard(models.TransientModel):
+    _name = 'epc.wizard.result'
+    
+    activityinfo_id = fields.Many2one('epc.activityinfo', string='Activity info')
+    line_ids = fields.One2many('epc.wizard.result.line', 'result_id')
+    
+    @api.one
+    def validate_results(self):
+        res_model = self.env['epc.activityinfo.result']
+        for result in self.line_ids:
+            res_ids = res_model.search([('activityinfo_id', '=', self.activityinfo_id.id), ('student_id', '=', result.student_id.id)])
+            if res_ids:
+                res_ids.write({'result': result.result})
+            else:
+                res_model.create({'activityinfo_id': self.activityinfo_id.id, 'student_id': result.student_id.id,'result': result.result})
+        self.activityinfo_id.signal_workflow('to_be_signed')
+        return True
+    
+class ResultsWizardLine(models.TransientModel):
+    _name = 'epc.wizard.result.line'
+
+    result_id = fields.Many2one('epc.wizard.result')
+    student_id = fields.Many2one('res.partner', string='Student', required=True)
+    result = fields.Float('Result')
+```
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="resultswizard_form_view">
+            <field name="name">epc.wizard.result.form</field>
+            <field name="model">epc.wizard.result</field>
+            <field name="arch" type="xml">
+                <form string="New results">
+                    <group col="1">
+                        <field name="activityinfo_id" readonly="1" nolabel="1"/>
+                        <field name="line_ids" nolabel="1">
+                            <tree editable="bottom">
+                                <field name="student_id" readonly="1"/>
+                                <field name="result"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <footer>
+                        <button name="validate_results" type="object"
+                                string="Validate" class="oe_highlight"/>
+                        or
+                        <button special="cancel" string="Cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</openerp>
+```
+
+```
+<button name="wizard_encode_results" type="object"
+    string="Encode results" states="give_result"/>
+    
+<page string="Results" states="to_be_signed,done">
+    <group col="1">
+        <field name="result_ids" nolabel="1">
+            <tree>
+                <field name="student_id"/>
+                <field name="result"/>
+            </tree>
+        </field>
+    </group>
+</page>    
+```
+        
 NEEDACTION
 ==========
 - _inherit = ['ir.needaction_mixin']
 - def _needaction_domain_get(self, cr, uid, context=None):
 - you have the list of the courses where results needs to be signed, encoded, ...
+
+```
+class ActivityInfo(models.Model):
+    _name = 'epc.activityinfo'
+    _inherit = ['mail.thread', 'ir.needaction_mixin']
+    
+    [...]
+    
+    @api.model
+    def _needaction_domain_get(self):
+        return [('state', '=', 'give_result')]
+```
