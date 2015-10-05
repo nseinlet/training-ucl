@@ -1,3 +1,4 @@
+import studentactivityinfo
 import activity
 import activityinfo
 import entity

@@ -72,7 +72,12 @@
                 <xpath expr="//page[@name='specset']" position="after">
                     <page string="Students">
                         <group col="1">
-                            <field name="student_ids" nolabel="1" widget="many2many_kanban"/>
+                            <field name="stud_ids" nolabel="1">
+                                <tree>
+                                    <field name="student_id"/>
+                                    <field name="registration_date"/>
+                                </tree>
+                            </field>
                         </group>
                     </page>
                     <page string="thesis" attrs="{'invisible': [('activity_type', '!=', 'THESE')]}">

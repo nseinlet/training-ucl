@@ -7,6 +7,7 @@ class Partner(models.Model):
     instructor = fields.Boolean("Instructor", default=False)
     student = fields.Boolean("Student", default=False)
     activityinfo_ids = fields.Many2many('epc.activityinfo', relation='epc_student_activityinfo', column1='student_id', column2='activity_id')
+    info_ids = fields.One2many('epc.student.activityinfo', 'student_id')
     entity_ids = fields.Many2many('epc.entity', relation='epc_partner_entity', column1='partner_id', column2='entity_id')
     entity_id = fields.Many2one('epc.entity')
     courses_count = fields.Integer('N° of courses', compute='_get_nbr_courses')

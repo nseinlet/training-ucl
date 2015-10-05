@@ -18,6 +18,7 @@ class ActivityInfo(models.Model):
     subdivision = fields.Char('Subdivision')
     activity_type = fields.Selection([('COURS', 'Cours'), ('PARTIM', 'Partim'), ('THESE', 'Thèse'), ('CLASSE', 'Classe')])
     student_ids = fields.Many2many('res.partner', domain="[('student', '=', 1)]", relation='epc_student_activityinfo', column1='activity_id', column2='student_id')
+    stud_ids = fields.One2many('epc.student.activityinfo', 'activity_id', string="Students")
     entity_id = fields.Many2one('epc.entity', string='Entity', ondelete="restrict")
     entity_attrib_id = fields.Many2one('epc.entity', string="Entity attributed", ondelete="restrict")
     vol_total = fields.Float(default=0)
