@@ -1487,28 +1487,29 @@ Wizards
 
 - create a new wizard to add points to students
 - save points in the activityinfo with a new model activityinforesults
+
 ```
-    result_ids = fields.One2many('epc.activityinfo.result', 'activityinfo_id', string="Results")
-    
-    @api.depends('student_ids')
-    def _get_students_count(self):
-        for r in self:
-            r.students_count = len(r.student_ids)
-            
-    @api.multi
-    def wizard_encode_results(self):
-        wiz_id = self.env['epc.wizard.result'].create({
-            'activityinfo_id': self.id,
-            'line_ids':[(0,0,{'student_id': student.id}) for student in self.student_ids],
-        })
-        return {
-            'type': 'ir.actions.act_window',
-            'view_type': 'form',
-            'view_mode': 'form',
-            'res_model': 'epc.wizard.result',
-            'res_id': wiz_id.id,
-            'target': 'new',
-        }
+result_ids = fields.One2many('epc.activityinfo.result', 'activityinfo_id', string="Results")
+
+@api.depends('student_ids')
+def _get_students_count(self):
+    for r in self:
+        r.students_count = len(r.student_ids)
+        
+@api.multi
+def wizard_encode_results(self):
+    wiz_id = self.env['epc.wizard.result'].create({
+        'activityinfo_id': self.id,
+        'line_ids':[(0,0,{'student_id': student.id}) for student in self.student_ids],
+    })
+    return {
+        'type': 'ir.actions.act_window',
+        'view_type': 'form',
+        'view_mode': 'form',
+        'res_model': 'epc.wizard.result',
+        'res_id': wiz_id.id,
+        'target': 'new',
+    }
         
 class ActivityInfoResults(models.Model):
     _name = 'epc.activityinfo.result'
@@ -1594,7 +1595,102 @@ class ResultsWizardLine(models.TransientModel):
     </group>
 </page>    
 ```
+
+Smart buttons
+=============
+
+- use smart buttons to display various infos of a student to the user
+
+```
+<xpath expr="//div[@name='buttons']" position="inside">
+    <button class="oe_inline oe_stat_button" type="object" name="courses_list" icon="fa-hospital-o">
+        <field name="courses_count" string="Skills" widget="statinfo"/>
+    </button>
+    <button class="oe_stat_button oe_inline" type="object" name="courses_list">
+        <field name="courses_prc" string="Skills" widget="percentpie"/>
+    </button>
+    <button class="oe_stat_button oe_inline" type="object" name="courses_list">
+        <field name="courses_daily" string="Skills" widget="barchart"/>
+    </button>
+</xpath> 
+```
+
+```
+courses_count = fields.Integer('N° of courses', compute='_get_nbr_courses')
+courses_prc = fields.Integer('Percentage of courses', compute='_get_prc_courses')
+courses_daily = fields.Char('Skills', compute='_get_courses_daily')
+
+@api.one
+def _get_courses_daily(self):
+    a = unicode([
+        { "tooltip" : "Old", "value": 5},
+        { "tooltip" : "New", "value": 7},
+        { "tooltip" : "New 2", "value": 7},
+        { "tooltip" : "New 3", "value": 7},
+    ]).replace("'","\"")
+    self.courses_daily = a
+    
+@api.one
+def _get_nbr_courses(self):
+    self.courses_count = len(self.activityinfo_ids)
+    
+@api.one
+@api.depends('activityinfo_ids')
+def _get_prc_courses(self):
+    nbr = self.env['epc.activityinfo'].sudo().search_count([])
+    if not nbr:
+        self.courses_prc = 0.0
+    else:
+        self.courses_prc = 100.0 * len(self.activityinfo_ids) / nbr
         
+@api.multi
+def courses_list(self):
+    return {
+        'name': 'Student courses',
+        'view_type': 'form',
+        'view_mode': 'tree,form',
+        'res_model': 'epc.activityinfo',
+        'type': 'ir.actions.act_window',
+        #'domain': [['id', 'in', self.activityinfo_ids.ids]],
+        'domain': [['student_ids.id', "=", self.id]]
+    }
+```
+        
+Models With init False
+======================
+
+```
+# -*- coding: utf-8 -*-
+
+from openerp import models, fields, api, exceptions, _, tools
+
+class SessionAnalysis(models.Model):
+    _name = "epc.activityinfo.analysis"
+    _description = "Course and session analysis"
+    _order='name'
+    _auto = False
+
+    name = fields.Char(string="Title")
+    code = fields.Char()
+    validity = fields.Integer('Validity')
+    sigle = fields.Char('Sigle')
+    cnum = fields.Integer('CNum')
+    subdivision = fields.Char('Subdivision')
+    responsible_id = fields.Many2one('res.users', string="responsible")
+    country_id = fields.Many2one('res.country')
+    students_count = fields.Integer()
+    
+    def init(self, cr):
+        #tools.sql.drop_view_if_exists(cr, 'academy_session_analysis')
+        cr.execute('''CREATE OR REPLACE VIEW epc_activityinfo_analysis AS (
+            select info.id, act.responsible_id, prtn.country_id, 
+            info.code, act.name, info.validity, info.sigle,
+            info.cnum, info.subdivision, info.students_count
+            from epc_activity as act
+            inner join epc_activityinfo as info on act.id=info.activity_id
+            left join res_partner as prtn on prtn.id=act.responsible_id)''')
+```
+
 NEEDACTION
 ==========
 - _inherit = ['ir.needaction_mixin']

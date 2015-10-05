@@ -1,0 +1,61 @@
+<openerp>
+    <data>
+        <report
+            id="report_activityinfo"
+            model="epc.activityinfo"
+            string="Info Report"
+            name="epc.report_info_view"
+            file="epc.report_activityinfo"
+            report_type="qweb-pdf" />
+
+        <report
+            id="report_activityinfo_html"
+            model="epc.activityinfo"
+            string="Info Report HTML"
+            name="epc.report_info_view"
+            file="epc.report_activityinfo"
+            report_type="qweb-html" />
+                
+        <template id="report_info_view">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="report.external_layout">
+                        <div class="page">
+                            <h2 t-field="doc.name"/>
+                            <h4 t-field="doc.complete_name"/>
+                            <p>Validity <span t-field="doc.validity"/></p>
+                            <h3>Attendees:</h3>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th name="name">Name</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="doc.result_ids" t-as="result">
+                                        <t t-call="epc.report_info_called"/>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+        
+        <!-- called by t-call -->
+        <template id="report_info_called">
+            <tr>
+                <td><span t-field="result.student_id.name"/></td>
+            </tr>
+        </template>
+        
+        <!-- Extend the report -->
+        <template id="report_info_view_extend" inherit_id="epc.report_info_called">
+            <xpath expr="//span[@t-field='result.student_id.name']/.." operation="after">
+                <td><span t-field="result.result"/></td>
+            </xpath>
+        </template>
+        
+    </data>
+</openerp>

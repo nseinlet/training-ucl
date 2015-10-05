@@ -7,15 +7,34 @@
             <field name="model">res.partner</field>
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="arch" type="xml">
+                <xpath expr="//div[@name='buttons']" position="inside">
+                    <button class="oe_inline oe_stat_button" type="object" name="courses_list" icon="fa-hospital-o">
+		            	<field name="courses_count" string="Skills" widget="statinfo"/>
+		            </button>
+		            <button class="oe_stat_button oe_inline" type="object" name="courses_list">
+		            	<field name="courses_prc" string="Skills" widget="percentpie"/>
+		            </button>
+		            <button class="oe_stat_button oe_inline" type="object" name="courses_list">
+						<field name="courses_daily" string="Skills" widget="barchart"/>
+					</button>
+                </xpath>        
+                            
                 <notebook position="inside">
                     <page string="Sessions">
                         <group col="4">
                             <field name="instructor"/>
                             <field name="student"/>
+                            <field name="registration_date"/>
                         </group>
                         <separator string="Activities" attrs="{'invisible': [('student', '=', False)]}"/>
                         <group col="1">
                             <field name="activityinfo_ids" nolabel="1"  attrs="{'invisible': [('student', '=', False)]}"/>
+                        </group>
+                    </page>
+                    <page string="Entities">
+                        <group col="1">
+                            <field name="entity_id"/>
+                            <field name="entity_ids" nolabel="1" widget="many2many_tags"/>
                         </group>
                     </page>
                 </notebook>

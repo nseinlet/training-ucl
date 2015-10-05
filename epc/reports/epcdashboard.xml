@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record model="ir.actions.act_window" id="act_session_graph">
+            <field name="name">Infos</field>
+            <field name="res_model">epc.activityinfo.analysis</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">graph</field>
+            <field name="view_id"
+                   ref="epc.epc_view_activityinfoanalysis_bar"/>
+        </record>
+        <record model="ir.actions.act_window" id="act_info_calendar">
+            <field name="name">Sessions</field>
+            <field name="res_model">epc.activityinfo</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">calendar,form</field>
+            <field name="view_id" ref="epc.epc_view_activityinfo_calendar"/>
+        </record>
+        <record model="ir.actions.act_window" id="act_activity_list">
+            <field name="name">Activities</field>
+            <field name="res_model">epc.activity</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <record model="ir.ui.view" id="board_epc_form">
+            <field name="name">Session Dashboard Form</field>
+            <field name="model">board.board</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Session Dashboard">
+                    <board style="2-1">
+                        <column>
+                            <action
+                                string="Attendees by info"
+                                name="%(act_session_graph)d"
+                                height="150"
+                                width="510"/>
+                            <action
+                                string="Infos"
+                                name="%(act_info_calendar)d"/>
+                        </column>
+                        <column>
+                            <action
+                                string="Activities"
+                                name="%(act_activity_list)d"/>
+                        </column>
+                    </board>
+                </form>
+            </field>
+        </record>
+    </data>
+</openerp>

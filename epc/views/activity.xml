@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
     <data>
+        <record model="ir.actions.server" id="printactivityname">
+            <field name="name">Print activity name</field>
+            <field name="model_id" ref="model_epc_activity"/>
+            <field name="code">
+raise Warning(object.name)
+            </field>
+        </record>
+        
         <!-- Search -->
         <record model="ir.ui.view" id="activity_search_view">
             <field name="name">activity.search</field>
@@ -29,6 +37,9 @@
             <field eval="16" name="priority"/>
             <field name="arch" type="xml">
                 <form string="Activity Form">
+                    <header>
+                        <button name="%(epc.printactivityname)d" type="action" string="Mon bouton"/>
+                    </header>
                     <sheet>
                         <group>
                             <field name="name"/>

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from openerp import models, fields, api, tools
+from openerp import models, fields, api, tools, exceptions, _
 import datetime
 
 class ActivityInfo(models.Model):
@@ -11,6 +11,7 @@ class ActivityInfo(models.Model):
     complete_name = fields.Char('Complete name')
     code = fields.Char(compute='_compute_code',store=True,select=1)
     site = fields.Char(compute='_compute_site')
+    picture = fields.Binary()
     validity = fields.Integer('Validity')
     sigle = fields.Char('Sigle', required=True)
     cnum = fields.Integer('CNum', required=True)
@@ -39,9 +40,10 @@ class ActivityInfo(models.Model):
         ('give_result', "Give results"),
         ('to_be_signed', "Results to be signed"),
         ('done', "Done"),
-    ], default='draft', track_visibility=True)
+    ], default='draft', track_visibility="always")
     result_ids = fields.One2many('epc.activityinfo.result', 'activityinfo_id', string="Results")
     
+        
     @api.multi
     def action_draft(self):
         self.state = 'draft'
@@ -81,13 +83,13 @@ class ActivityInfo(models.Model):
     def _check_total_vol1(self):
         for record in self:
             if round(record.vol1_q1 + record.vol1_q2 - record.vol1_total,2)!=0 and (record.vol1_q1!=0 or record.vol1_q2!=0):
-                raise ValidationError("Your total is not equal to the sum of the 2 quarters : %s + %s != %s" % (record.vol1_q1, record.vol1_q2,  record.vol1_total))
+                raise ValidationError(_("Your total is not equal to the sum of the 2 quarters : %s + %s != %s") % (record.vol1_q1, record.vol1_q2,  record.vol1_total))
                 
     @api.constrains('vol2_total')
     def _check_total_vol2(self):
         for record in self:
             if round(record.vol2_q1 + record.vol2_q2 - record.vol2_total,2)!=0 and (record.vol2_q1!=0 or record.vol2_q2!=0):
-                raise ValidationError("Your total is not equal to the sum of the 2 quarters : %s + %s != %s" % (record.vol2_q1, record.vol2_q2,  record.vol2_total))
+                raise ValidationError(_("Your total is not equal to the sum of the 2 quarters : %s + %s != %s") % (record.vol2_q1, record.vol2_q2,  record.vol2_total))
 
     @api.onchange('date_start', 'date_end')
     def _verify_dates(self):
@@ -96,8 +98,8 @@ class ActivityInfo(models.Model):
         if self.date_start and self.date_end and self.date_end < self.date_start:
             return {
                 'warning': {
-                    'title': "Incorrect dates",
-                    'message': "Finish date must be greater or equal to begin date",
+                    'title': _("Incorrect dates"),
+                    'message': _("Finish date must be greater or equal to begin date"),
                 },
             }
 
@@ -112,6 +114,7 @@ class ActivityInfo(models.Model):
             'activityinfo_id': self.id,
             'line_ids':[(0,0,{'student_id': student.id}) for student in self.student_ids],
         })
+            
         return {
             'type': 'ir.actions.act_window',
             'view_type': 'form',
@@ -124,6 +127,17 @@ class ActivityInfo(models.Model):
     @api.model
     def _needaction_domain_get(self):
         return [('state', '=', 'give_result')]
+    
+    @api.multi
+    def mamethode(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'epc.wizard.result',
+            'res_id': wiz_id.id,
+            'target': 'new',
+        }    
         
 class ActivityInfoResults(models.Model):
     _name = 'epc.activityinfo.result'

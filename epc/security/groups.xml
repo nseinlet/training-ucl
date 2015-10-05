@@ -1,0 +1,10 @@
+<openerp>
+ <data>
+        <record id="group_professor" model="res.groups">
+            <field name="name">Professor</field>
+        </record>
+        <record id="group_assistant" model="res.groups">
+            <field name="name">Assistant</field>
+        </record>
+    </data>
+</openerp>

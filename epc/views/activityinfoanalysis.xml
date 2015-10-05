@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <!-- Search -->
+        <record model="ir.ui.view" id="activityinfoanalysis_search_view">
+            <field name="name">activityinfo.search</field>
+            <field name="model">epc.activityinfo.analysis</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="responsible_id"/>
+                </search>
+            </field>
+        </record>
+                
+        <!-- graph view -->
+        <record model="ir.ui.view" id="epc_view_activityinfoanalysis_graph">
+            <field name="name">epc.activityinfo.graph</field>
+            <field name="model">epc.activityinfo.analysis</field>
+            <field name="priority">8</field>
+            <field name="arch" type="xml">
+                <graph string="Participations by Courses" type="pivot">
+                    <field name="name"/>
+                    <field name="cnum"/>
+                    <field name="sigle" type="col"/>
+                    <field name="students_count" type="measure"/>
+                </graph>
+
+            </field>
+        </record>
+        
+        <!-- graph view -->
+        <record model="ir.ui.view" id="epc_view_activityinfoanalysis_bar">
+            <field name="name">epc.activityinfo.graph</field>
+            <field name="model">epc.activityinfo.analysis</field>
+            <field name="priority">16</field>
+            <field name="arch" type="xml">
+                <graph string="Participations by Courses" type="bar">
+                    <field name="name"/>
+                    <field name="cnum"/>
+                    <field name="students_count" type="measure"/>
+                </graph>
+
+            </field>
+        </record>
+        
+    </data>
+</openerp>

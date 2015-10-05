@@ -16,12 +16,18 @@
             <field name="name">Activity infos</field>
             <field name="res_model">epc.activityinfo</field>
             <field name="view_type">form</field>
-            <field name="view_mode">tree,form,calendar,gantt,graph</field>
+            <field name="view_mode">tree,form,calendar,gantt,graph,kanban</field>
             <field name="view_id" eval="False"/>
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">Create the first info
                 </p>
             </field>    
+        </record>
+        <record model="ir.actions.act_window" id="activityinfoanalysis_list_action">
+            <field name="name">Activity infos analysis</field>
+            <field name="res_model">epc.activityinfo.analysis</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">graph</field>
         </record>
         <record model="ir.actions.act_window.view" id="activityinfo_list_action_tree">
             <field name="view_mode">tree</field>
@@ -59,14 +65,32 @@
           <field name="res_model">epc.entity</field>
           <field name="view_mode">tree,form</field>
       </record>
+      <record model="ir.actions.act_window" id="open_board_epc">
+        <field name="name">EPC Dashboard</field>
+        <field name="res_model">board.board</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="usage">menu</field>
+        <field name="view_id" ref="board_epc_form"/>
+      </record>
+      
 
         <menuitem id="main_epc_menu" name="EPC"/>
+
+        <menuitem
+            name="EPC Dashboard" parent="base.menu_reporting_dashboard"
+            action="open_board_epc"
+            sequence="1"
+            id="menu_board_epc" icon="terp-graph"/>
+            
         <menuitem id="epc_menu" name="Activities"
                   parent="main_epc_menu"/>
         <menuitem id="activitys_menu" name="Activities" parent="epc_menu"
                   action="activity_list_action" sequence="1"/>
         <menuitem id="activityinfos_menu" name="Infos" parent="epc_menu"
                   action="activityinfo_list_action" sequence="2"/>
+        <menuitem id="activityinfosanalysis_menu" name="Analyse" parent="epc_menu"
+                  action="activityinfoanalysis_list_action" sequence="3"/>
                   
       <menuitem id="configuration_menu" name="Configuration"
                 parent="main_epc_menu"/>

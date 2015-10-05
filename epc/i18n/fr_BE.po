@@ -1,0 +1,849 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* epc
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-10-02 07:40+0000\n"
+"PO-Revision-Date: 2015-10-02 07:40+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: epc
+#: view:epc.activity:epc.activity_search_view
+#: view:epc.activityinfo:epc.activityinfo_search_view
+msgid "2015 activities"
+msgstr "2015 activities"
+
+#. module: epc
+#: model:ir.actions.act_window,help:epc.activity_list_action
+msgid "<p class=\"oe_view_nocontent_create\">Create the first course\n"
+"                </p>\n"
+"            "
+msgstr "<p class=\"oe_view_nocontent_create\">Create the first course\n"
+"                </p>\n"
+"            "
+
+#. module: epc
+#: model:ir.actions.act_window,help:epc.activityinfo_list_action
+msgid "<p class=\"oe_view_nocontent_create\">Create the first info\n"
+"                </p>\n"
+"            "
+msgstr "<p class=\"oe_view_nocontent_create\">Create the first info\n"
+"                </p>\n"
+"            "
+
+#. module: epc
+#: model:ir.actions.act_window,help:epc.specset_list_action
+msgid "<p class=\"oe_view_nocontent_create\">Create the first specification set\n"
+"                </p>\n"
+"            "
+msgstr "<p class=\"oe_view_nocontent_create\">Create the first specification set\n"
+"                </p>\n"
+"            "
+
+#. module: epc
+#: field:epc.activity,active:0
+msgid "Active"
+msgstr "Active"
+
+#. module: epc
+#: view:epc.entity:epc.epc_entity_form
+#: field:epc.entity,activites_charge_ids:0
+#: model:ir.actions.act_window,name:epc.activity_list_action
+#: model:ir.ui.menu,name:epc.activitys_menu
+#: model:ir.ui.menu,name:epc.epc_menu
+#: view:res.partner:epc.partner_instructor_form_view
+msgid "Activities"
+msgstr "Activités"
+
+#. module: epc
+#: view:epc.activityinfo:epc.epc_view_activityinfo_gantt
+msgid "Activities Gantt"
+msgstr "Activities Gantt"
+
+#. module: epc
+#: view:epc.activityinfo:epc.activityinfo_search_view
+#: field:epc.specset,activity_id:0
+msgid "Activity"
+msgstr "Activity"
+
+#. module: epc
+#: view:epc.activity:epc.activity_form_view
+#: view:epc.activityinfo:epc.activityinfo_form_view
+msgid "Activity Form"
+msgstr "Activity Form"
+
+#. module: epc
+#: model:ir.model,name:epc.model_epc_activityinfo
+msgid "Activity Info"
+msgstr "Activity Info"
+
+#. module: epc
+#: field:epc.activityinfo.result,activityinfo_id:0
+#: field:epc.wizard.result,activityinfo_id:0
+msgid "Activity info"
+msgstr "Activity info"
+
+#. module: epc
+#: model:ir.actions.act_window,name:epc.activityinfo_list_action
+msgid "Activity infos"
+msgstr "Activity infos"
+
+#. module: epc
+#: view:epc.activityinfo:epc.epc_view_activityinfo_calendar
+msgid "Activity infos Calendar"
+msgstr "Activity infos Calendar"
+
+#. module: epc
+#: model:ir.actions.act_window,name:epc.activityinfoanalysis_list_action
+msgid "Activity infos analysis"
+msgstr "Activity infos analysis"
+
+#. module: epc
+#: field:epc.activityinfo,activity_type:0
+msgid "Activity type"
+msgstr "Activity type"
+
+#. module: epc
+#: field:res.partner,activityinfo_ids:0
+msgid "Activityinfo ids"
+msgstr "Activityinfo ids"
+
+#. module: epc
+#: model:ir.ui.menu,name:epc.activityinfosanalysis_menu
+msgid "Analyse"
+msgstr "Analyse"
+
+#. module: epc
+#: model:res.groups,name:epc.group_assistant
+msgid "Assistant"
+msgstr "Assistant"
+
+#. module: epc
+#: view:epc.entity:epc.epc_entity_form
+#: field:epc.entity,activites_attrib_ids:0
+msgid "Attributed activities"
+msgstr "Attributed activities"
+
+#. module: epc
+#: field:epc.activityinfo,activity_id:0
+msgid "Automatically created field to link to parent epc.activity"
+msgstr "Automatically created field to link to parent epc.activity"
+
+#. module: epc
+#: field:epc.activityinfo,date_start:0
+msgid "Begin"
+msgstr "Begin"
+
+#. module: epc
+#: field:epc.activityinfo,cnum:0
+#: field:epc.activityinfo.analysis,cnum:0
+msgid "CNum"
+msgstr "CNum"
+
+#. module: epc
+#: model:ir.model,name:epc.model_epc_specset
+msgid "Cahier de charge"
+msgstr "Cahier de charge"
+
+#. module: epc
+#: field:epc.activity,specset_ids:0
+msgid "Cahiers de charge"
+msgstr "Cahiers de charge"
+
+#. module: epc
+#: view:epc.wizard.result:epc.resultswizard_form_view
+msgid "Cancel"
+msgstr "Cancel"
+
+#. module: epc
+#: field:epc.entity,child_ids:0
+msgid "Child Entities"
+msgstr "Child Entities"
+
+#. module: epc
+#: selection:epc.activityinfo,activity_type:0
+msgid "Classe"
+msgstr "Classe"
+
+#. module: epc
+#: field:epc.activityinfo,code:0
+#: field:epc.activityinfo.analysis,code:0
+msgid "Code"
+msgstr "Code"
+
+#. module: epc
+#: field:epc.activityinfo,color:0
+msgid "Color"
+msgstr "Color"
+
+#. module: epc
+#: view:epc.activityinfo:epc.activityinfo_form_primherit_view
+msgid "Complete Name"
+msgstr "Nom complet"
+
+#. module: epc
+#: field:epc.activityinfo,complete_name:0
+msgid "Complete name"
+msgstr "Nom complet"
+
+#. module: epc
+#: model:ir.ui.menu,name:epc.configuration_menu
+msgid "Configuration"
+msgstr "Configuration"
+
+#. module: epc
+#: view:epc.activityinfo:epc.activityinfo_form_primherit_view
+msgid "Confirm"
+msgstr "Confirmer"
+
+#. module: epc
+#: model:ir.actions.act_window,name:epc.contact_list_action
+#: model:ir.ui.menu,name:epc.contact_menu
+msgid "Contacts"
+msgstr "Contacts"
+
+#. module: epc
+#: field:epc.activityinfo.analysis,country_id:0
+msgid "Country id"
+msgstr "Pays"
+
+#. module: epc
+#: selection:epc.activityinfo,activity_type:0
+msgid "Cours"
+msgstr "Cours"
+
+#. module: epc
+#: model:ir.model,name:epc.model_epc_activityinfo_analysis
+msgid "Course and session analysis"
+msgstr "Course and session analysis"
+
+#. module: epc
+#: field:epc.activity,create_uid:0
+#: field:epc.activityinfo,create_uid:0
+#: field:epc.activityinfo.result,create_uid:0
+#: field:epc.entity,create_uid:0
+#: field:epc.specset,create_uid:0
+#: field:epc.wizard.result,create_uid:0
+#: field:epc.wizard.result.line,create_uid:0
+msgid "Created by"
+msgstr "Created by"
+
+#. module: epc
+#: field:epc.activity,create_date:0
+#: field:epc.activityinfo,create_date:0
+#: field:epc.activityinfo.result,create_date:0
+#: field:epc.entity,create_date:0
+#: field:epc.specset,create_date:0
+#: field:epc.wizard.result,create_date:0
+#: field:epc.wizard.result.line,create_date:0
+msgid "Created on"
+msgstr "Created on"
+
+#. module: epc
+#: help:epc.activity,message_last_post:0
+#: help:epc.activityinfo,message_last_post:0
+#: help:epc.entity,message_last_post:0
+#: help:epc.specset,message_last_post:0
+msgid "Date of the last message posted on the record."
+msgstr "Date of the last message posted on the record."
+
+#. module: epc
+#: view:epc.activityinfo:epc.epc_view_activityinfo_kanban
+msgid "Delete"
+msgstr "Delete"
+
+#. module: epc
+#: view:epc.activity:epc.activity_form_view
+#: field:epc.activity,description:0
+msgid "Description"
+msgstr "Description"
+
+#. module: epc
+#: view:epc.activityinfo:epc.activityinfo_form_view
+msgid "Details"
+msgstr "Details"
+
+#. module: epc
+#: selection:epc.activityinfo,state:0
+msgid "Done"
+msgstr "Done"
+
+#. module: epc
+#: selection:epc.activityinfo,state:0
+msgid "Draft"
+msgstr "Draft"
+
+#. module: epc
+#: model:ir.ui.menu,name:epc.main_epc_menu
+msgid "EPC"
+msgstr "EPC"
+
+#. module: epc
+#: model:ir.model,name:epc.model_epc_entity
+msgid "Email Thread"
+msgstr "Discussion par courriel"
+
+#. module: epc
+#: view:epc.activityinfo:epc.activityinfo_form_primherit_view
+msgid "Encode results"
+msgstr "Encode results"
+
+#. module: epc
+#: view:epc.activity:epc.activity_search_view
+#: view:epc.activityinfo:epc.activityinfo_search_view
+#: field:epc.activityinfo,date_end:0
+msgid "End"
+msgstr "End"
+
+#. module: epc
+#: view:epc.activityinfo:epc.epc_view_activityinfo_kanban
+msgid "End date:"
+msgstr "End date:"
+
+#. module: epc
+#: field:epc.activity,ens_end:0
+msgid "Ens end"
+msgstr "Ens end"
+
+#. module: epc
+#: field:epc.activity,ens_start:0
+msgid "Ens start"
+msgstr "Ens start"
+
+#. module: epc
+#: model:ir.actions.act_window,name:epc.entity_list_action
+#: model:ir.ui.menu,name:epc.entity_menu
+#: view:res.partner:epc.partner_instructor_form_view
+msgid "Entities"
+msgstr "Entities"
+
+#. module: epc
+#: view:epc.entity:epc.epc_view_entity_tree
+msgid "Entities list"
+msgstr "Entities list"
+
+#. module: epc
+#: field:epc.activityinfo,entity_id:0
+msgid "Entity"
+msgstr "Entity"
+
+#. module: epc
+#: field:epc.activityinfo,entity_attrib_id:0
+msgid "Entity attributed"
+msgstr "Entity attributed"
+
+#. module: epc
+#: field:res.partner,entity_id:0
+msgid "Entity id"
+msgstr "Entity id"
+
+#. module: epc
+#: field:res.partner,entity_ids:0
+msgid "Entity ids"
+msgstr "Entity ids"
+
+#. module: epc
+#: code:addons/epc/models/activityinfo.py:102
+#, python-format
+msgid "Finish date must be greater or equal to begin date"
+msgstr "Finish date must be greater or equal to begin date"
+
+#. module: epc
+#: field:epc.activity,message_follower_ids:0
+#: field:epc.activityinfo,message_follower_ids:0
+#: field:epc.entity,message_follower_ids:0
+#: field:epc.specset,message_follower_ids:0
+msgid "Followers"
+msgstr "Followers"
+
+#. module: epc
+#: selection:epc.activityinfo,state:0
+msgid "Give results"
+msgstr "Give results"
+
+#. module: epc
+#: view:epc.activity:epc.activity_search_view
+#: view:epc.activityinfo:epc.activityinfo_search_view
+msgid "Group By"
+msgstr "Group By"
+
+#. module: epc
+#: help:epc.activity,message_summary:0
+#: help:epc.activityinfo,message_summary:0
+#: help:epc.entity,message_summary:0
+#: help:epc.specset,message_summary:0
+msgid "Holds the Chatter summary (number of messages, ...). This summary is directly in html format in order to be inserted in kanban views."
+msgstr "Holds the Chatter summary (number of messages, ...). This summary is directly in html format in order to be inserted in kanban views."
+
+#. module: epc
+#: field:epc.activity,id:0
+#: field:epc.activityinfo,id:0
+#: field:epc.activityinfo.analysis,id:0
+#: field:epc.activityinfo.result,id:0
+#: field:epc.entity,id:0
+#: field:epc.specset,id:0
+#: field:epc.wizard.result,id:0
+#: field:epc.wizard.result.line,id:0
+msgid "ID"
+msgstr "ID"
+
+#. module: epc
+#: help:epc.activity,message_unread:0
+#: help:epc.activityinfo,message_unread:0
+#: help:epc.entity,message_unread:0
+#: help:epc.specset,message_unread:0
+msgid "If checked new messages require your attention."
+msgstr "If checked new messages require your attention."
+
+#. module: epc
+#: selection:epc.activityinfo,state:0
+msgid "In progress"
+msgstr "In progress"
+
+#. module: epc
+#: code:addons/epc/models/activityinfo.py:101
+#, python-format
+msgid "Incorrect dates"
+msgstr "Incorrect dates"
+
+#. module: epc
+#: view:epc.activity:epc.activity_form_view_inherit
+#: field:epc.activity,activityinfo_ids:0
+#: model:ir.ui.menu,name:epc.activityinfos_menu
+msgid "Infos"
+msgstr "Infos"
+
+#. module: epc
+#: field:res.partner,instructor:0
+msgid "Instructor"
+msgstr "Instructor"
+
+#. module: epc
+#: field:epc.activity,message_is_follower:0
+#: field:epc.activityinfo,message_is_follower:0
+#: field:epc.entity,message_is_follower:0
+#: field:epc.specset,message_is_follower:0
+msgid "Is a Follower"
+msgstr "Is a Follower"
+
+#. module: epc
+#: field:epc.specset,language:0
+msgid "Language"
+msgstr "Language"
+
+#. module: epc
+#: field:epc.activity,message_last_post:0
+#: field:epc.activityinfo,message_last_post:0
+#: field:epc.entity,message_last_post:0
+#: field:epc.specset,message_last_post:0
+msgid "Last Message Date"
+msgstr "Last Message Date"
+
+#. module: epc
+#: field:epc.activity,write_uid:0
+#: field:epc.activityinfo,write_uid:0
+#: field:epc.activityinfo.result,write_uid:0
+#: field:epc.entity,write_uid:0
+#: field:epc.specset,write_uid:0
+#: field:epc.wizard.result,write_uid:0
+#: field:epc.wizard.result.line,write_uid:0
+msgid "Last Updated by"
+msgstr "Last Updated by"
+
+#. module: epc
+#: field:epc.activity,write_date:0
+#: field:epc.activityinfo,write_date:0
+#: field:epc.activityinfo.result,write_date:0
+#: field:epc.entity,write_date:0
+#: field:epc.specset,write_date:0
+#: field:epc.wizard.result,write_date:0
+#: field:epc.wizard.result.line,write_date:0
+msgid "Last Updated on"
+msgstr "Last Updated on"
+
+#. module: epc
+#: field:epc.entity,parent_left:0
+msgid "Left Parent"
+msgstr "Left Parent"
+
+#. module: epc
+#: field:epc.wizard.result,line_ids:0
+msgid "Line ids"
+msgstr "Line ids"
+
+#. module: epc
+#: view:epc.activityinfo:epc.activityinfo_form_primherit_view
+msgid "Mark as done"
+msgstr "Mark as done"
+
+#. module: epc
+#: field:epc.activity,message_ids:0
+#: field:epc.activityinfo,message_ids:0
+#: field:epc.entity,message_ids:0
+#: field:epc.specset,message_ids:0
+msgid "Messages"
+msgstr "Messages"
+
+#. module: epc
+#: help:epc.activity,message_ids:0
+#: help:epc.activityinfo,message_ids:0
+#: help:epc.entity,message_ids:0
+#: help:epc.specset,message_ids:0
+msgid "Messages and communication history"
+msgstr "Messages and communication history"
+
+#. module: epc
+#: view:epc.activity:epc.activity_form_view
+msgid "Mon bouton"
+msgstr "Mon bouton"
+
+#. module: epc
+#: field:epc.activity,name:0
+#: field:epc.entity,name:0
+msgid "Name"
+msgstr "Name"
+
+#. module: epc
+#: view:epc.activityinfo:epc.activityinfo_form_primherit_view
+msgid "Need results"
+msgstr "Need results"
+
+#. module: epc
+#: view:epc.wizard.result:epc.resultswizard_form_view
+msgid "New results"
+msgstr "New results"
+
+#. module: epc
+#: field:epc.entity,parent_id:0
+msgid "Parent entity"
+msgstr "Parent entity"
+
+#. module: epc
+#: view:epc.activityinfo:epc.epc_view_activityinfo_graph
+#: view:epc.activityinfo.analysis:epc.epc_view_activityinfoanalysis_graph
+msgid "Participations by Courses"
+msgstr "Participations by Courses"
+
+#. module: epc
+#: selection:epc.activityinfo,activity_type:0
+msgid "Partim"
+msgstr "Partim"
+
+#. module: epc
+#: model:ir.model,name:epc.model_res_partner
+msgid "Partner"
+msgstr "Partenaire"
+
+#. module: epc
+#: field:epc.activityinfo,picture:0
+msgid "Picture"
+msgstr "Picture"
+
+#. module: epc
+#: field:epc.specset,prerequisite:0
+msgid "Prerequisite"
+msgstr "Prerequisite"
+
+#. module: epc
+#: model:ir.actions.server,name:epc.printactivityname
+msgid "Print activity name"
+msgstr "Print activity name"
+
+#. module: epc
+#: model:res.groups,name:epc.group_professor
+msgid "Professor"
+msgstr "Professor"
+
+#. module: epc
+#: field:res.partner,registration_date:0
+msgid "Registration date"
+msgstr "Registration date"
+
+#. module: epc
+#: view:epc.activityinfo:epc.activityinfo_form_primherit_view
+msgid "Reset to draft"
+msgstr "Reset to draft"
+
+#. module: epc
+#: field:epc.activity,responsible_id:0
+msgid "Responsible"
+msgstr "Responsible"
+
+#. module: epc
+#: field:epc.activityinfo.result,result:0
+#: field:epc.wizard.result.line,result:0
+msgid "Result"
+msgstr "Result"
+
+#. module: epc
+#: field:epc.wizard.result.line,result_id:0
+msgid "Result id"
+msgstr "Result id"
+
+#. module: epc
+#: view:epc.activityinfo:epc.activityinfo_form_primherit_view
+#: field:epc.activityinfo,result_ids:0
+msgid "Results"
+msgstr "Results"
+
+#. module: epc
+#: selection:epc.activityinfo,state:0
+msgid "Results to be signed"
+msgstr "Results to be signed"
+
+#. module: epc
+#: field:epc.entity,parent_right:0
+msgid "Right Parent"
+msgstr "Right Parent"
+
+#. module: epc
+#: view:epc.activity:epc.activity_form_view
+msgid "Schedule"
+msgstr "Plannification"
+
+#. module: epc
+#: view:epc.activityinfo:epc.epc_view_activityinfo_kanban
+msgid "Session name:"
+msgstr "Session name:"
+
+#. module: epc
+#: view:res.partner:epc.partner_instructor_form_view
+msgid "Sessions"
+msgstr "Sessions"
+
+#. module: epc
+#: model:ir.actions.server,name:epc.set_activityinfo_to_draft
+msgid "Set session to Draft"
+msgstr "Set session to Draft"
+
+#. module: epc
+#: field:epc.activityinfo,sigle:0
+#: field:epc.activityinfo.analysis,sigle:0
+msgid "Sigle"
+msgstr "Sigle"
+
+#. module: epc
+#: view:res.partner:epc.partner_instructor_form_view
+msgid "Skills"
+msgstr "Skills"
+
+#. module: epc
+#: field:epc.specset,skills:0
+msgid "Skills to aquire"
+msgstr "Skills to aquire"
+
+#. module: epc
+#: model:ir.ui.menu,name:epc.specset_menu
+msgid "Spec sets"
+msgstr "Spec sets"
+
+#. module: epc
+#: sql_constraint:epc.specset:0
+msgid "Specification set must be unique by language-activity!"
+msgstr "Specification set must be unique by language-activity!"
+
+#. module: epc
+#: model:ir.actions.act_window,name:epc.specset_list_action
+msgid "Specification sets"
+msgstr "Specification sets"
+
+#. module: epc
+#: view:epc.activity:epc.activity_form_view
+#: view:epc.specset:epc.epc_specset_form
+#: view:epc.specset:epc.epc_view_specset_tree
+msgid "Specset"
+msgstr "Specset"
+
+#. module: epc
+#: view:epc.activity:epc.activity_search_view
+#: view:epc.activityinfo:epc.activityinfo_search_view
+msgid "Start"
+msgstr "Start"
+
+#. module: epc
+#: view:epc.activityinfo:epc.epc_view_activityinfo_kanban
+msgid "Start date:"
+msgstr "Start date:"
+
+#. module: epc
+#: field:epc.activityinfo,state:0
+msgid "State"
+msgstr "State"
+
+#. module: epc
+#: field:epc.activityinfo.result,student_id:0
+#: field:epc.wizard.result.line,student_id:0
+#: field:res.partner,student:0
+msgid "Student"
+msgstr "Student"
+
+#. module: epc
+#: field:epc.activityinfo,student_ids:0
+msgid "Student ids"
+msgstr "Student ids"
+
+#. module: epc
+#: view:epc.activityinfo:epc.activityinfo_form_primherit_view
+#: view:epc.activityinfo:epc.activityinfo_form_view
+msgid "Students"
+msgstr "Students"
+
+#. module: epc
+#: field:epc.activityinfo.analysis,students_count:0
+msgid "Students count"
+msgstr "Students count"
+
+#. module: epc
+#: field:epc.activityinfo,subdivision:0
+#: field:epc.activityinfo.analysis,subdivision:0
+msgid "Subdivision"
+msgstr "Subdivision"
+
+#. module: epc
+#: field:epc.activity,message_summary:0
+#: field:epc.activityinfo,message_summary:0
+#: field:epc.entity,message_summary:0
+#: field:epc.specset,message_summary:0
+msgid "Summary"
+msgstr "Summary"
+
+#. module: epc
+#: selection:epc.activityinfo,activity_type:0
+msgid "Thèse"
+msgstr "Thèse"
+
+#. module: epc
+#: field:epc.activityinfo.analysis,name:0
+msgid "Title"
+msgstr "Title"
+
+#. module: epc
+#: view:epc.entity:epc.epc_entity_form
+msgid "UCL Entity form"
+msgstr "UCL Entity form"
+
+#. module: epc
+#: field:epc.activity,message_unread:0
+#: field:epc.activityinfo,message_unread:0
+#: field:epc.entity,message_unread:0
+#: field:epc.specset,message_unread:0
+msgid "Unread Messages"
+msgstr "Unread Messages"
+
+#. module: epc
+#: view:epc.wizard.result:epc.resultswizard_form_view
+msgid "Validate"
+msgstr "Validate"
+
+#. module: epc
+#: field:epc.activityinfo,validity:0
+#: field:epc.activityinfo.analysis,validity:0
+#: field:epc.specset,validity:0
+msgid "Validity"
+msgstr "Validity"
+
+#. module: epc
+#: field:epc.entity,validity_end:0
+msgid "Validity end"
+msgstr "Validity end"
+
+#. module: epc
+#: field:epc.entity,validity_start:0
+msgid "Validity start"
+msgstr "Validity start"
+
+#. module: epc
+#: field:epc.activityinfo,vol_total:0
+msgid "Vol total"
+msgstr "Vol total"
+
+#. module: epc
+#: field:epc.activityinfo,vol1_coeff:0
+msgid "Vol1 coeff"
+msgstr "Vol1 coeff"
+
+#. module: epc
+#: field:epc.activityinfo,vol1_q1:0
+msgid "Vol1 q1"
+msgstr "Vol1 q1"
+
+#. module: epc
+#: field:epc.activityinfo,vol1_q2:0
+msgid "Vol1 q2"
+msgstr "Vol1 q2"
+
+#. module: epc
+#: field:epc.activityinfo,vol1_total:0
+msgid "Vol1 total"
+msgstr "Vol1 total"
+
+#. module: epc
+#: field:epc.activityinfo,vol2_coeff:0
+msgid "Vol2 coeff"
+msgstr "Vol2 coeff"
+
+#. module: epc
+#: field:epc.activityinfo,vol2_q1:0
+msgid "Vol2 q1"
+msgstr "Vol2 q1"
+
+#. module: epc
+#: field:epc.activityinfo,vol2_q2:0
+msgid "Vol2 q2"
+msgstr "Vol2 q2"
+
+#. module: epc
+#: field:epc.activityinfo,vol2_total:0
+msgid "Vol2 total"
+msgstr "Vol2 total"
+
+#. module: epc
+#: view:epc.activityinfo:epc.activityinfo_form_view
+msgid "Volumes"
+msgstr "Volumes"
+
+#. module: epc
+#: code:addons/epc/models/activityinfo.py:86
+#: code:addons/epc/models/activityinfo.py:92
+#, python-format
+msgid "Your total is not equal to the sum of the 2 quarters : %s + %s != %s"
+msgstr "Your total is not equal to the sum of the 2 quarters : %s + %s != %s"
+
+#. module: epc
+#: model:ir.model,name:epc.model_epc_activity
+msgid "activity"
+msgstr "activity"
+
+#. module: epc
+#: view:epc.activityinfo:epc.epc_view_activityinfo_tree
+msgid "activityinfo"
+msgstr "activityinfo"
+
+#. module: epc
+#: view:epc.wizard.result:epc.resultswizard_form_view
+msgid "or"
+msgstr "or"
+
+#. module: epc
+#: field:epc.activityinfo.analysis,responsible_id:0
+msgid "responsible"
+msgstr "responsible"
+
+#. module: epc
+#: field:epc.activityinfo,students_count:0
+msgid "students count"
+msgstr "students count"
+
+#. module: epc
+#: view:epc.activityinfo:epc.activityinfo_form_primherit_view
+#: view:epc.activityinfo:epc.activityinfo_form_view
+msgid "thesis"
+msgstr "thesis"

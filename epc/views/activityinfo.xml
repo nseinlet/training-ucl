@@ -42,9 +42,6 @@
                         <button name="give_result" type="workflow"
                                 string="Need results" states="in_progress,to_be_signed"
                                 class="oe_highlight"/>
-                        <button name="to_be_signed" type="workflow"
-                                string="To be signed" states="give_result"
-                                class="oe_highlight"/>
                         <button name="done" type="workflow"
                                 string="Mark as done" states="to_be_signed"
                                 class="oe_highlight"/>
@@ -53,8 +50,15 @@
                         <field name="state" widget="statusbar"/>
                     </header>
                 </xpath>
+                <xpath expr="//field[@name='name']" position="before">
+                    <field name="picture" widget="image" class="oe_left oe_avatar" options="{&quot;size&quot;: [90, 90]}" nolabel="1"/>
+                    <div class="oe_title oe_left">
+                        <h1>
+                            <field name="complete_name" default_focus="1" placeholder="Complete Name"/>
+                        </h1>
+                    </div>
+                </xpath>
                 <xpath expr="//field[@name='name']" position="after">
-                    <field name="complete_name"/>
                     <field name="entity_id" options="{'no_create': True, 'no_open': True}"/>
                     <field name="entity_attrib_id"/>
                 </xpath>
@@ -68,7 +72,7 @@
                 <xpath expr="//page[@name='specset']" position="after">
                     <page string="Students">
                         <group col="1">
-                            <field name="student_ids" nolabel="1"/>
+                            <field name="student_ids" nolabel="1" widget="many2many_kanban"/>
                         </group>
                     </page>
                     <page string="thesis" attrs="{'invisible': [('activity_type', '!=', 'THESE')]}">
