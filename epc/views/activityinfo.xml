@@ -72,11 +72,7 @@
                 <xpath expr="//page[@name='specset']" position="after">
                     <page string="Students">
                         <group col="1">
-                            <field name="stud_ids" nolabel="1">
-                                <tree>
-                                    <field name="student_id"/>
-                                    <field name="registration_date"/>
-                                </tree>
+                            <field name="student_ids" nolabel="1"  widget="many2many_tags">
                             </field>
                         </group>
                     </page>
@@ -253,6 +249,9 @@
                                     <br/>
                                     End date:
                                     <field name="date_end"/>
+                                    <br/>
+                                    Priority:
+                                    <field name="priority" widget="priority"/>
                                 </div>
                             </div>
                         </t>

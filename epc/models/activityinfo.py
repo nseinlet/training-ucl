@@ -11,6 +11,7 @@ class ActivityInfo(models.Model):
     complete_name = fields.Char('Complete name')
     code = fields.Char(compute='_compute_code',store=True,select=1)
     site = fields.Char(compute='_compute_site')
+    priority = fields.Selection((('0', 'Low'), ('1', 'Normal'), ('2', 'High'), ('3', 'Nuclear')), string='Priority', default='0')
     picture = fields.Binary()
     validity = fields.Integer('Validity')
     sigle = fields.Char('Sigle', required=True)

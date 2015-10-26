@@ -20,7 +20,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['mail', 'board'],
+    'depends': ['mail', 'board', 'website'],
     
     # always loaded
     'data': [
@@ -37,6 +37,7 @@
         'reports/activityinfo.xml',
         'reports/epcdashboard.xml',
         'views/menu.xml',
+        'templates.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

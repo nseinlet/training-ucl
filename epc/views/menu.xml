@@ -60,11 +60,26 @@
           <field name="domain">['|', ('instructor', '=', True), ('student', '=', True)]</field>
           <field name="context" eval="{ 'default_instructor': 1,'default_student': 1 }" />
       </record>
+      
+      <record model="ir.actions.act_window" id="child_entities_id">
+            <field name="name">Entities</field>
+            <field name="res_model">epc.entity</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{
+                    'search_default_parent_id': [active_id],
+                    'default_parent_id': active_id,
+                }
+            </field>
+        </record>
+        
       <record model="ir.actions.act_window" id="entity_list_action">
           <field name="name">Entities</field>
           <field name="res_model">epc.entity</field>
+          <field name="view_type">tree</field>
           <field name="view_mode">tree,form</field>
+          <field name="act_window_id" ref="child_entities_id"/>
       </record>
+      
       <record model="ir.actions.act_window" id="open_board_epc">
         <field name="name">EPC Dashboard</field>
         <field name="res_model">board.board</field>

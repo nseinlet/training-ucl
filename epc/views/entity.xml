@@ -39,6 +39,7 @@
         <record model="ir.ui.view" id="epc_view_entity_tree">
             <field name="name">epc.view.entity_tree</field>
             <field name="model">epc.entity</field>
+            <field name="field_parent">child_ids</field>
             <field name="priority" eval="16"/>
             <field name="arch" type="xml">
                 <tree string="Entities list">

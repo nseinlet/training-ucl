@@ -1,14 +1,48 @@
 <openerp>
     <data>
-        <!-- <template id="listing"> -->
-        <!--   <ul> -->
-        <!--     <li t-foreach="objects" t-as="object"> -->
-        <!--       <a t-attf-href="#{ root }/objects/#{ object.id }"> -->
-        <!--         <t t-esc="object.display_name"/> -->
-        <!--       </a> -->
-        <!--     </li> -->
-        <!--   </ul> -->
-        <!-- </template> -->
+        <template id="listing">
+            <t t-call="website.layout">
+                <div class="oe_structure">
+                    <div class="container">
+                        <ul>
+                            <div class="row"><div class="col-md-12">
+                            <table class="table">
+                                <thead>
+                                    <tr name="rowhead"><th>Name</th></tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="objects" t-as="object">
+                                        <tr name="rowcontent">
+                                            <td><a t-attf-href="/epc/{{ slug(object) }}"><span t-field="object.name"/></a></td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                        </table>
+                    </div></div>
+                        </ul>
+                    </div>
+                </div>
+            </t>
+        </template>
+        
+        <template id="listing_with_email" inherit_id="listing">
+            <xpath expr="//tr[@name='rowhead']" position="inside">
+                <th>Email</th>
+            </xpath>
+            <xpath expr="//tr[@name='rowcontent']" position="inside">
+                <td><a t-attf-href="{{'mailto:%s' % object.responsible_id.email}}"><span t-esc="object.responsible_id.email"/></a></td>
+            </xpath>
+        </template>
+        
+        <template id="activity_page">
+            <t t-call="website.layout">
+                <div class="oe_structure">
+                    <div class="container">
+                        <span t-field="activite.name"/>
+                    </div>
+                </div>
+            </t>
+        </template>
         <!-- <template id="object"> -->
         <!--   <h1><t t-esc="object.display_name"/></h1> -->
         <!--   <dl> -->
